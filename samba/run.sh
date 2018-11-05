@@ -19,8 +19,8 @@ docker run -d \
 
 ret=$?
 if [ $ret -ne 0 ]; then
-    echo "Samba is not running"
-		exit $ret
+	echo "Samba is not running"
+	exit $ret
 fi
 
 echo "Samba is running"

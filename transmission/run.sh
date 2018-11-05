@@ -23,8 +23,8 @@ docker run -d \
 
 ret=$?
 if [ $ret -ne 0 ]; then
-    echo "Transmission is not running"
-		exit $ret
+	echo "Transmission is not running"
+	exit $ret
 fi
 
 echo "Transmission is running"

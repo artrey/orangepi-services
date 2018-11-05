@@ -9,7 +9,7 @@ if [ ! -d "media" ]; then
   mkdir "media"
 fi
 
-exec sh fan-manager/run.sh
-exec sh samba/run.sh
-exec sh transmission/run.sh
-exec sh plex/run.sh
+bash fan-manager/run.sh
+bash samba/run.sh
+bash transmission/run.sh
+bash plex/run.sh

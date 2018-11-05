@@ -19,8 +19,8 @@ docker run -d \
 
 ret=$?
 if [ $ret -ne 0 ]; then
-    echo "Plex is not running"
-		exit $ret
+	echo "Plex is not running"
+	exit $ret
 fi
 
 echo "Plex is running"
