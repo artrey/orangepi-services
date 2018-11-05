@@ -12,7 +12,7 @@ docker run -d \
 	--restart=always \
 	--net=host \
 	-v $PWD/config:/config \
-	-v $PWD/../media:/data
+	-v $PWD/../media:/data \
 	-v $PWD/transcode:/transcode \
 	-e PUID=1000 -e PGID=1000 \
 	lsioarmhf/plex
