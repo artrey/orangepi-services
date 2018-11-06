@@ -4,6 +4,11 @@
 ROOT_DIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 cd "$ROOT_DIR"
 
+# creating share folder for all files
+if [ ! -d "share" ]; then
+  mkdir "share"
+fi
+
 echo "Run samba container"
 
 # payload
