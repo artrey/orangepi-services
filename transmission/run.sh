@@ -12,7 +12,7 @@ docker run -d \
 	--restart=always \
 	--cpus=".5" -m 512m \
 	-v $PWD/config:/config \
-	-v $PWD/../media:/downloads/complete \
+	-v $PWD/../media/movies:/downloads/complete \
 	-v $PWD/torrents:/watch \
 	-p 9091:9091 \
 	-p 51413:51413 \
