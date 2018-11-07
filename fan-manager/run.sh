@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 
-# find root dir of script
+echo "Looking for root dir of fan manager run script"
 ROOT_DIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 cd "$ROOT_DIR"
+echo "Script located in $PWD"
+
+echo "Checking for file config.yml exists"
+if [ ! -f "config.yml" ]; then
+  touch "config.yml"
+fi
+
+echo "Creating logs folder if not exists"
+if [ ! -d "logs" ]; then
+  mkdir "logs"
+fi
 
 echo "Run fan-manager container"
 
