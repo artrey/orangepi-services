@@ -10,6 +10,9 @@ chcek_return_code_of_last_command() {
 }
 
 extract_env_variable() {
+	# Checking the env variable and set it to default value if not exists
+	# $1 env variable name
+	# $2 default value for this variable
 	echo "Detecting env variable $1..."
 	eval temp=\$$1
 	if [ -z "$temp" ]; then
@@ -21,6 +24,9 @@ extract_env_variable() {
 }
 
 safe_create_folder() {
+	# Creating folder if not exists and set abs path to specify variable
+	# $1 path to folder (absolute or relative)
+	# $2 name of variable for returning abs path
 	if [ ! -d "$1" ]; then
 		echo "Creating folder..."
 		mkdir -p "$1"
@@ -33,38 +39,18 @@ safe_create_folder() {
 
 echo "Detecting root dir of script..."
 ROOT_DIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
-cd "$ROOT_DIR"
-echo "Script folder: $PWD"
+echo "Script folder: $ROOT_DIR"
 
 echo "Preparing environment for service '$SERVICE_NAME'"
 
-extract_env_variable MEDIA_DIR media
+extract_env_variable MEDIA_DIR "$ROOT_DIR/media"
 safe_create_folder "$MEDIA_DIR" MEDIA_DIR
-echo "TEST = $MEDIA_DIR"
-exit 0
 
-MEDIA_DIR=$( folder_from_env_variable MEDIA_DIR media )
-echo "$MEDIA_DIR"
-exit 0
+extract_env_variable CONFIG_DIR "$ROOT_DIR/config"
+safe_create_folder "$CONFIG_DIR" CONFIG_DIR
 
-echo "Detecting env variable MEDIA_DIR..."
-if [ -z "$MEDIA_DIR" ]; then
-	echo "Detected empty value... Setting to default: media"
-	MEDIA_DIR="media"
-fi
-echo "MEDIA_DIR=$MEDIA_DIR"
-
-if [ ! -d "$MEDIA_DIR" ]; then
-	echo "Creating media folder..."
-  mkdir -p "$MEDIA_DIR"
-	chcek_return_code_of_last_command $?
-fi
-
-MEDIA_DIR="$( cd "$MEDIA_DIR" >/dev/null && pwd )"
-
-echo "completed"
-
-exit 0
+extract_env_variable TRANSCODE_DIR "$ROOT_DIR/transcode"
+safe_create_folder "$TRANSCODE_DIR" TRANSCODE_DIR
 
 echo "Run container with service '$SERVICE_NAME'"
 
@@ -73,9 +59,9 @@ docker run -d \
 	--name=plex \
 	--restart=always \
 	--net=host \
-	-v "$ROOT_DIR/config":/config \
 	-v "$MEDIA_DIR":/data \
-	-v "$ROOT_DIR/transcode":/transcode \
+	-v "$CONFIG_DIR":/config \
+	-v "$TRANSCODE_DIR":/transcode \
 	-e PUID=1000 -e PGID=1000 \
 	lsioarmhf/plex
 
