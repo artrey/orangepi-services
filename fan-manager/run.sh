@@ -57,8 +57,6 @@ safe_create_folder "$LOGS_DIR" LOGS_DIR
 
 echo "Run container with service '$SERVICE_NAME'"
 
-exit 0
-
 # payload
 docker run -d \
 	--name=fan-manager \
