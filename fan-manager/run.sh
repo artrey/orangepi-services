@@ -44,15 +44,20 @@ echo "Script folder: $ROOT_DIR"
 echo "Preparing environment for service '$SERVICE_NAME'"
 
 echo "Checking for file config.yml exists"
-if [ ! -f "$ROOT_DIR/config.yml" ]; then
-  touch "$ROOT_DIR/config.yml"
+CONFIG_FILE="$ROOT_DIR/config.yml"
+if [ ! -f "$CONFIG_FILE" ]; then
+	echo "File config.yml not found in script folder. Creating empty file..."
+  touch "$CONFIG_FILE"
 	chcek_return_code_of_last_command $?
+	echo "File created: $CONFIG_FILE"
 fi
 
 extract_env_variable LOGS_DIR "$ROOT_DIR/logs"
 safe_create_folder "$LOGS_DIR" LOGS_DIR
 
 echo "Run container with service '$SERVICE_NAME'"
+
+exit 0
 
 # payload
 docker run -d \
@@ -61,8 +66,8 @@ docker run -d \
 	--privileged \
 	-v /sys/class/gpio:/sys/class/gpio \
 	-v /sys/devices/virtual/thermal/thermal_zone0/temp:/sys/devices/virtual/thermal/thermal_zone0/temp:ro \
-	-v $ROOT_DIR/config.yml:/opt/app/config.yml:ro \
-	-v $LOGS_DIR:/opt/app/logs \
+	-v "$CONFIG_FILE":/opt/app/config.yml:ro \
+	-v "$LOGS_DIR":/opt/app/logs \
 	artrey/gpio-fan-manager-arm64
 
 
