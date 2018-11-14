@@ -61,6 +61,7 @@ echo "Run container with service '$SERVICE_NAME'"
 docker run -d \
 	--name=fan-manager \
 	--restart=always \
+	--cpus=".05" -m 32m \
 	--privileged \
 	-v /sys/class/gpio:/sys/class/gpio \
 	-v /sys/devices/virtual/thermal/thermal_zone0/temp:/sys/devices/virtual/thermal/thermal_zone0/temp:ro \

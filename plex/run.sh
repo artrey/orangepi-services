@@ -58,6 +58,7 @@ echo "Run container with service '$SERVICE_NAME'"
 docker run -d \
 	--name=plex \
 	--restart=always \
+	--cpus=".5" -m 512m \
 	--net=host \
 	-v "$MEDIA_DIR":/data \
 	-v "$CONFIG_DIR":/config \

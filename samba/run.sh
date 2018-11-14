@@ -52,6 +52,7 @@ echo "Run container with service '$SERVICE_NAME'"
 docker run -d \
 	--name=samba \
 	--restart=always \
+	--cpus=".1" -m 128m \
 	-v "$SHARE_DIR":/data \
 	-p 137:137/udp -p 138:138/udp \
 	-p 139:139/tcp -p 445:445/tcp \
